@@ -1,0 +1,14 @@
+doctype html
+html 
+    head 
+        title= 'ASDASDASD'
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Animais de estimação
+        .cards 
+            each animal_de_estimacao in data
+                .card 
+                    h2 #{animal_de_estimacao.properties.nome_do_animal_de_estimacao}
+                    p #{animal_de_estimacao.properties.raca_do_animal_de_animacao}
+                    p #{animal_de_estimacao.properties.idade_do_animal_de_estimacao}

@@ -13,6 +13,25 @@ const PRIVATE_APP_ACCESS = 'pat-na1-a35e9658-75f2-4a84-ab68-9e7e4a3e89f8';
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 app.get('/', async (req, res) =>{
+    const cobj = "https://api.hubapi.com/crm/v3/objects/2-20803845/?properties=nome_do_animal_de_estimacao&properties=raca_do_animal_de_animacao&properties=idade_do_animal_de_estimacao";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+    const properties = [
+        "nome_do_animal_de_estimacao",
+        "raca_do_animal_de_estimacao",
+        "idade_do_animal_de_estimacao"
+      ]
+
+    try {
+        const resp = await axios.get(cobj,{headers})
+        console.error(resp);
+        const data = resp.data.results;
+        res.render('home',{data})
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
@@ -31,10 +50,11 @@ app.post('/update-cobj', async (req, res) =>{
     }
 
     const newobj = {
+        associations: [{"types":[{"associationCategory":"USER_DEFINED","associationTypeId":1}],"to":{"id":"2-20803845"}}],
         properties: {
-            "nome_do_animal_de_estimacao": req.body.nome_do_animal_de_estimacao,
-            "raca_do_animal_de_estimacao": req.body.raca_do_animal_de_estimacao,
-            "idade_do_animal_de_estimacao": req.body.idade_do_animal_de_estimacao
+            "nome_do_animal_de_estimacao": req.body.nome,
+            "raca_do_animal_de_animacao": req.body.raca,
+            "idade_do_animal_de_estimacao": req.body.idade
         }
     }
 
@@ -42,7 +62,7 @@ app.post('/update-cobj', async (req, res) =>{
         await axios.post(cobj,newobj,{headers});
         res.redirect('back');
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 });
 
