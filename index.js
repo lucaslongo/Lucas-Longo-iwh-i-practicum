@@ -43,14 +43,14 @@ app.get('/update-cobj', (req, res) =>{
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
 app.post('/update-cobj', async (req, res) =>{
-    const cobj = "https://api.hubspot.com/crm/v3/objects/animais_de_estimacao";
+    const cobj = "https://api.hubspot.com/crm/v3/objects/2-20803845";
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         'Content-Type': 'application/json'
     }
 
     const newobj = {
-        associations: [{"types":[{"associationCategory":"USER_DEFINED","associationTypeId":1}],"to":{"id":"2-20803845"}}],
+
         properties: {
             "nome_do_animal_de_estimacao": req.body.nome,
             "raca_do_animal_de_animacao": req.body.raca,
@@ -60,7 +60,7 @@ app.post('/update-cobj', async (req, res) =>{
 
     try {
         await axios.post(cobj,newobj,{headers});
-        res.redirect('back');
+        res.redirect('/');
     } catch (error) {
         console.error(error);
     }
