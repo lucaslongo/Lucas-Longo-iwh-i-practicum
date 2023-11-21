@@ -1,0 +1,16 @@
+doctype html 
+html(lang="en")
+    head 
+        title= `${title}`
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        .form-wrapper 
+            form(method="POST")
+                label(for="nome") Nome do animal de estimação 
+                input(type="text" name="nome" required)
+                label(for="raca_do_animal_de_estimacao") Raça do animal de estimação
+                input(type="text" name="raca_do_animal_de_estimacao")
+                label(for="idade_do_animal_de_estimacao") Idade do animal de estimação
+                input(type="number" name="idade_do_animal_de_estimacao")
+                input(type="submit" value="Submit")
+                
