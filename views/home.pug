@@ -1,0 +1,20 @@
+doctype html
+html 
+    head 
+        title= 'ASDASDASD'
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Animais de estimação
+        a(href="/update-cobj") Add/Update table
+        .table
+            table 
+                tr 
+                    td Nome
+                    td Raça
+                    td Idade
+                each animal_de_estimacao in data
+                    tr 
+                        td #{animal_de_estimacao.properties.nome_do_animal_de_estimacao}
+                        td #{animal_de_estimacao.properties.raca_do_animal_de_animacao}
+                        td #{animal_de_estimacao.properties.idade_do_animal_de_estimacao}

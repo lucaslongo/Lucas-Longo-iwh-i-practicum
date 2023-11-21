@@ -8,19 +8,63 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
-const PRIVATE_APP_ACCESS = '';
+const PRIVATE_APP_ACCESS = 'pat-na1-a35e9658-75f2-4a84-ab68-9e7e4a3e89f8';
 
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
-// * Code for Route 1 goes here
+app.get('/', async (req, res) =>{
+    const cobj = "https://api.hubapi.com/crm/v3/objects/2-20803845/?properties=nome_do_animal_de_estimacao&properties=raca_do_animal_de_animacao&properties=idade_do_animal_de_estimacao";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+    const properties = [
+        "nome_do_animal_de_estimacao",
+        "raca_do_animal_de_estimacao",
+        "idade_do_animal_de_estimacao"
+      ]
+
+    try {
+        const resp = await axios.get(cobj,{headers})
+        console.error(resp);
+        const data = resp.data.results;
+        res.render('home',{data})
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
-// * Code for Route 2 goes here
+app.get('/update-cobj', (req, res) =>{
+    res.render('updates', {title: 'Update Custom Object Form | Integrating With HubSpot I Practicum' });
+});
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
-// * Code for Route 3 goes here
+app.post('/update-cobj', async (req, res) =>{
+    const cobj = "https://api.hubspot.com/crm/v3/objects/2-20803845";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+
+    const newobj = {
+
+        properties: {
+            "nome_do_animal_de_estimacao": req.body.nome,
+            "raca_do_animal_de_animacao": req.body.raca,
+            "idade_do_animal_de_estimacao": req.body.idade
+        }
+    }
+
+    try {
+        await axios.post(cobj,newobj,{headers});
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 

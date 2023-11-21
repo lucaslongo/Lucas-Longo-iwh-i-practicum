@@ -1,0 +1,18 @@
+doctype html 
+html(lang="en")
+    head 
+        title= `${title}`
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        .link-return 
+            a(href="http://localhost:3000") Retornar
+        .form-wrapper 
+            form(method="POST")
+                label(for="nome") Nome do animal de estimação 
+                input(type="text" name="nome" required)
+                label(for="raca") Raça do animal de estimação
+                input(type="text" name="raca")
+                label(for="idade") Idade do animal de estimação
+                input(type="number" name="idade")
+                input(type="submit" value="Submit")
+                
